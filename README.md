@@ -15,7 +15,7 @@
 
 Windows 7/8/10 <br>
 Net Framework 4.6.1 minimum  
-https://cdn.discordapp.com/attachments/336267547798405121/423517130454204426/Release.7z
+
 <b>Coming soon :</b>
 
 Custom user tools, Custom buttons, Loot filters with auto update
