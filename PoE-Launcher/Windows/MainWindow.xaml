@@ -1,0 +1,131 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:local="clr-namespace:PoELauncher"
+        x:Name="mainWindow" x:Class="PoELauncher.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="435" Width="605" WindowStyle="None" 
+        ResizeMode="NoResize" UseLayoutRounding="True"
+        RenderOptions.BitmapScalingMode="NearestNeighbor"
+        SnapsToDevicePixels="True"
+        RenderOptions.ClearTypeHint="Enabled"
+        TextOptions.TextFormattingMode="Display"
+        Background="#BDBDBD" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <Style TargetType="ScrollBar" BasedOn="{StaticResource VerticalScrollBar}"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid UseLayoutRounding="True" Background="#BDBDBD" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
+        <Image x:Name="image" Height="100" Source="pack://application:,,,/img/MainHeader.png" Stretch="Fill" Margin="0,15,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top">
+        </Image>
+        <Canvas x:Name="CanvasTitleBar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="15" Background="#424242" Grid.ColumnSpan="3" MouseDown="CanvasTitleBar_MouseDown">
+            <Ellipse x:Name="Close" Stroke="#E53935" Fill="{Binding btnCloseColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Height="11" Width="11" RenderTransformOrigin="3.842,0.673" Canvas.Left="591" MouseDown="Ellipse_MouseDown" Canvas.Top="2" MouseEnter="Ellipse_MouseEnter" MouseLeave="Ellipse_MouseLeave"/>
+            <Ellipse x:Name="Minimize" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Height="11" Width="11" RenderTransformOrigin="3.842,0.673" Canvas.Left="578" Canvas.Top="2" MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave"/>
+        </Canvas>
+        <dragablz:TabablzControl x:Name="materialTabControl" FixedHeaderCount="2" Background="#BDBDBD" Height="320" Margin="0,115,0,0" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" VerticalAlignment="Top">
+            <dragablz:TabablzControl.Resources>
+                <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#4E342E"/>
+                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
+                    <Setter Property="Height" Value="120" />
+                    <Setter Property="BorderBrush" Value="#BDBDBD"/>
+                    <Setter Property="InkCanvas.Background" Value="#4E342E"/>
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="dragablz:DragablzItem" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
+                                <Setter Property="Background" Value="#cfcfcf" />
+                                <Setter Property="Foreground" Value="#4E342E" />
+                                <Setter Property="BorderBrush" Value="#4E342E"/>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </dragablz:TabablzControl.Resources>
+            <TabItem x:Name="TabLauncher" Header="Launcher">
+                <Grid Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" Margin="-3,9,-3,-3">
+                    <StackPanel x:Name="StackPanel_LaunchButtons" HorizontalAlignment="Left" Width="147" VerticalAlignment="Top" Height="280" >
+                        <Button x:Name="MaterialButtonLauncher" Style="{StaticResource materialButton}" Click="MaterialButtonLauncher_Click" Height="50">
+                            <TextBlock>Launch<LineBreak/>Tools</TextBlock>
+                        </Button>
+                        <CheckBox x:Name="CheckBoxStartPoE"  Style="{StaticResource materialCheckBox}" IsChecked="True" Click="CheckBoxStartPoE_Click" Height="40" HorizontalAlignment="Right" Width="127">
+                            <TextBlock>Start PoE ?<LineBreak/>(Steam Only)</TextBlock>
+                        </CheckBox>
+                        <CheckBox x:Name="CheckBoxCloseOnExit"  Style="{StaticResource materialCheckBox}" IsChecked="True" Height="40" HorizontalAlignment="Right" Width="127" Click="CheckBoxCloseOnExit_Click">
+                            <TextBlock>Close tools when<LineBreak/>game exits ?</TextBlock>
+                        </CheckBox>
+                        <Button x:Name="AllWebsitesButtonLauncher" Style="{StaticResource materialButton}" Click="AllWebsitesButtonLauncher_Click" Height="50">
+                            <TextBlock>Launch all<LineBreak/>websites</TextBlock>
+                        </Button>
+                    </StackPanel>
+                    <WrapPanel x:Name="linkButtonsPanel" Orientation="Vertical" Margin="147,0,0,0" HorizontalAlignment="Left" >
+                        <WrapPanel.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource materialButton}">
+                                <Setter Property="Margin" Value="0,20,20,0"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="Width" Value="83"/>
+                                <Setter Property="DockPanel.Dock" Value="Bottom"/>
+                            </Style>
+                        </WrapPanel.Resources>
+                    </WrapPanel>
+                </Grid>
+            </TabItem >
+
+            <TabItem x:Name="TabConfiguration" Header="Configuration" >
+                <Grid Background="#BDBDBD">
+                    <ScrollViewer x:Name="ScrollViewerRepo" HorizontalAlignment="Left" Width="435">
+                        <StackPanel x:Name="panelRepo" VerticalAlignment="Top" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type local:RepoDispControl}">
+                                    <Setter Property="Margin" Value="0,10,0,10"/>
+                                    <Setter Property="VerticalAlignment" Value="Top"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                                </Style>
+                            </StackPanel.Resources>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <TextBox Style="{StaticResource placeHolderMaterialTextBox}" Tag="Search..." x:Name="filter_Search" Width="Auto" Margin="440,0,0,250" TextChanged="filter_Search_TextChanged"/>
+                    <ListBox Name="filter_listbox" Margin="440,30,0,60" Height="Auto" SelectionChanged="filter_listbox_SelectionChanged">
+                        <ListBoxItem x:Name="filter_All">
+                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_All, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                All
+                            </CheckBox>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="filter_Downloaded">
+                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Downloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                Downloaded
+                            </CheckBox>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="filter_NotDownloaded">
+                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_NotDownloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                Not downloaded
+                            </CheckBox>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="filter_Enabled">
+                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Enabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                Enabled
+                            </CheckBox>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="filter_Disabled">
+                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Disabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                Disabled
+                            </CheckBox>
+                        </ListBoxItem>
+                        <ListBoxItem x:Name="filter_Custom">
+                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Custom, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                Custom tools
+                            </CheckBox>
+                        </ListBoxItem>
+                    </ListBox>
+                    <Button x:Name="AddCustomTool" Content="Custom" Style="{StaticResource materialButton}" Margin="450,235,0,0" VerticalAlignment="Top" Click="AddCustomToolButton_Click"/>
+                </Grid>
+            </TabItem>
+        </dragablz:TabablzControl>
+    </Grid>
+</Window>

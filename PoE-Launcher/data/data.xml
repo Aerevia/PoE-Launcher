@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data>
+  <repos>
+    <repo>
+      <owner>PoE-TradeMacro</owner>
+      <app>POE-TradeMacro</app>
+      <name>TradeMacro</name>
+      <desc>PoE TradeMacro is an Autohotkey (AHK) script that provides several convenient QoL features for Path of Exile Trading.</desc>
+      <exe>Fallback</exe>
+    </repo>
+    <repo>
+      <owner>lemasato</owner>
+      <app>POE-Trades-Companion</app>
+      <name>TradesCompanion</name>
+      <desc>Path of Exile Trades Companion enhances your trading experience.</desc>
+      <exe>POE Trades Companion</exe>
+    </repo>
+    <repo>
+        <owner>Exslims</owner>
+        <app>MercuryTrade</app>
+        <name>MercuryTrade</name>
+        <desc>An overlay application for Path of Exile(Tracking, Trading, Chat, etc) </desc>
+        <exe>MercuryTrade</exe>
+      </repo>
+      <repo>
+      <owner>yznpku</owner>
+      <app>LabCompass</app>
+      <name>LabCompass</name>
+      <desc>Lab Compass for the lab.</desc>
+      <exe>LabCompass</exe>
+    </repo>
+  </repos>
+  <links>
+    <link>
+      <name>poe.trade</name>
+      <url>http://poe.trade/</url>
+    </link>
+    <link>
+      <name>Wiki</name>
+      <url>https://pathofexile.gamepedia.com/Path_of_Exile_Wiki</url>
+    </link>
+    <link>
+      <name>Reddit</name>
+      <url>https://www.reddit.com/r/pathofexile/</url>
+    </link>
+    <link>
+      <name>Forum</name>
+      <url>https://www.pathofexile.com/forum</url>
+    </link>
+  </links>
+</data>
+
