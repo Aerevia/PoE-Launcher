@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace PoELauncher.Extensions
 {
-
     public class GithubRepository
     {
         public string Owner { get; set; }

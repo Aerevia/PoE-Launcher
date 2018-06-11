@@ -28,7 +28,6 @@ namespace PoELauncher
 
     public partial class RepoDispControl : UserControl
     {
-
         public RepoDispControl()
         {
             InitializeComponent();
@@ -137,6 +136,5 @@ namespace PoELauncher
                 SwitchChecked(this, var);
             }
         }
-
     }
 }

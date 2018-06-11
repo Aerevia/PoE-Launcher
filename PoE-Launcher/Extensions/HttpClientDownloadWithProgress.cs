@@ -77,7 +77,6 @@ namespace PoELauncher.Extensions
                 fileStream.Close();
                 fileStream.Dispose();
                 DownloadCompleted();
-
             }
         }
 

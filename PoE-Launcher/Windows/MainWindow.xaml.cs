@@ -238,7 +238,6 @@ namespace PoELauncher
 
             using (var client = new HttpClientDownloadWithProgress(downloadLink, fileName))
             {
-
                 client.ProgressChanged += (totalFileSize, totalBytesDownloaded, progressPercentage) =>
                 {
                     Dispatcher.Invoke(new Action(() =>
@@ -314,9 +313,7 @@ namespace PoELauncher
                     MessageBox.Show("File type not supported");
                     break;
             }
-
             //MessageBox.Show(app + " succesfully extracted");
-
         }
 
         /// <summary>
@@ -468,7 +465,6 @@ namespace PoELauncher
 
         private void SwitchCheckedCustom(object sender, VarEventChecked e)
         {
-
         }
         #endregion
 
@@ -648,7 +644,6 @@ namespace PoELauncher
                 {
                     control.Visibility = Visibility.Collapsed;
                 }
-
             }
         }
     }
