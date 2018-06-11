@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PoELauncher.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,20 +19,8 @@ namespace PoELauncher
     /// <summary>
     /// Logique d'interaction pour RepoDispControl.xaml
     /// </summary>
-    /// 
 
     #region events
-    public class VarEventClick : EventArgs
-    {
-        public int numButton;
-        public int idApplication;
-    }
-
-    public class VarEventChecked : EventArgs
-    {
-        public int idApplication;
-        public bool enabled;
-    }
 
     public delegate void EventClick(object sender, VarEventClick e);
     public delegate void EventChecked(object sender, VarEventChecked e);
@@ -151,4 +140,3 @@ namespace PoELauncher
 
     }
 }
-

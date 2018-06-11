@@ -140,6 +140,8 @@
     <Compile Include="Extensions\GithubRepository.cs" />
     <Compile Include="Extensions\HttpClientDownloadWithProgress.cs" />
     <Compile Include="Extensions\ToolSettings.cs" />
+    <Compile Include="Extensions\VarEventChecked.cs" />
+    <Compile Include="Extensions\VarEventClick.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

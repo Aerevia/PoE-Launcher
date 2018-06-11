@@ -38,12 +38,10 @@ namespace PoELauncher
         private int customToolsStartId;
         private bool githubError = false;
 
-
         public MainWindow()
         {
             InitializeComponent();
             InitializeApp();
-
         }
 
         /// <summary>
@@ -464,7 +462,7 @@ namespace PoELauncher
 
         private void SwitchChecked(object sender, VarEventChecked e)
         {
-            Settings.Default.ToolSettings[e.idApplication].Enabled = e.enabled;// = new ToolSettings { Enabled = e.enabled, Downloaded = Settings.Default.ToolSettings[e.idApplication].Downloaded,CurrentVersion };
+            Settings.Default.ToolSettings[e.idApplication].Enabled = e.enabled; // = new ToolSettings { Enabled = e.enabled, Downloaded = Settings.Default.ToolSettings[e.idApplication].Downloaded,CurrentVersion };
             Settings.Default.Save();
         }
 
@@ -536,8 +534,8 @@ namespace PoELauncher
             CustomWindow AddCustomWindow = new CustomWindow();
             AddCustomWindow.ShowInTaskbar = true;
             AddCustomWindow.Topmost = true;
-            AddCustomWindow.Left = mainWindow.Left + (mainWindow.Width - AddCustomWindow.Width) / 2;
-            AddCustomWindow.Top = mainWindow.Top + (mainWindow.Height - AddCustomWindow.Height) / 2;
+            AddCustomWindow.Left = mainWindow.Left + ((mainWindow.Width - AddCustomWindow.Width) / 2);
+            AddCustomWindow.Top = mainWindow.Top + ((mainWindow.Height - AddCustomWindow.Height) / 2);
             AddCustomWindow.ShowDialog();
         }
 
@@ -565,7 +563,7 @@ namespace PoELauncher
                     foreach (RepoDispControl control in dispControls.Values)
                     {
                         control.Visibility = Visibility.Visible;
-                    };
+                    }
                     break;
                 case 1:
                     foreach (RepoDispControl control in dispControls.Values)
@@ -578,7 +576,7 @@ namespace PoELauncher
                         {
                             control.Visibility = Visibility.Visible;
                         }
-                    };
+                    }
                     break;
                 case 2:
                     foreach (RepoDispControl control in dispControls.Values)
@@ -591,7 +589,7 @@ namespace PoELauncher
                         {
                             control.Visibility = Visibility.Visible;
                         }
-                    };
+                    }
                     break;
                 case 3:
                     foreach (RepoDispControl control in dispControls.Values)
@@ -604,7 +602,7 @@ namespace PoELauncher
                         {
                             control.Visibility = Visibility.Visible;
                         }
-                    };
+                    }
                     break;
                 case 4:
                     foreach (RepoDispControl control in dispControls.Values)
@@ -617,7 +615,7 @@ namespace PoELauncher
                         {
                             control.Visibility = Visibility.Visible;
                         }
-                    };
+                    }
                     break;
                 case 5:
                     foreach (RepoDispControl control in dispControls.Values)
@@ -630,7 +628,7 @@ namespace PoELauncher
                         {
                             control.Visibility = Visibility.Visible;
                         }
-                    };
+                    }
                     break;
                 default:
                     break;
@@ -651,7 +649,7 @@ namespace PoELauncher
                     control.Visibility = Visibility.Collapsed;
                 }
 
-            };
+            }
         }
     }
 }
