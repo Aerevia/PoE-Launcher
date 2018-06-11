@@ -19,7 +19,6 @@ namespace PoELauncher
     /// <summary>
     /// Logique d'interaction pour RepoDispControl.xaml
     /// </summary>
-
     #region events
 
     public delegate void EventClick(object sender, VarEventClick e);
