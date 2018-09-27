@@ -58,6 +58,9 @@ namespace PoELauncher
                     Settings.Default.Save();
                 }
 
+                mainWindow.Width = Settings.Default.MainWindow_Width;
+                mainWindow.Height = Settings.Default.MainWindow_Heigth;
+
                 btnCloseColor = new SolidColorBrush(Color.FromArgb(255, 231, 76, 60));
                 btnMinimizeColor = new SolidColorBrush(Color.FromArgb(255, 241, 196, 15));
 
@@ -380,7 +383,7 @@ namespace PoELauncher
             this.Close();
         }
 
-        private void CanvasTitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
@@ -645,6 +648,13 @@ namespace PoELauncher
                     control.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+
+        private void mainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Settings.Default.MainWindow_Heigth = mainWindow.Height;
+            Settings.Default.MainWindow_Width = mainWindow.Width;
+            Settings.Default.Save();
         }
     }
 }

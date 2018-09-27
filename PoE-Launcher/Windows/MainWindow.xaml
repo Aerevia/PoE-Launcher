@@ -7,32 +7,47 @@
         xmlns:local="clr-namespace:PoELauncher"
         x:Name="mainWindow" x:Class="PoELauncher.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="435" Width="605" WindowStyle="None" 
-        ResizeMode="CanResize" UseLayoutRounding="True"
+        Title="MainWindow" Height="435" Width="605"
+        MinHeight="435" MinWidth="605"
+        ResizeMode="CanResizeWithGrip" UseLayoutRounding="True"
         RenderOptions.BitmapScalingMode="NearestNeighbor"
         SnapsToDevicePixels="True"
         RenderOptions.ClearTypeHint="Enabled"
         TextOptions.TextFormattingMode="Display"
-        Background="#BDBDBD" Loaded="Window_Loaded" Closing="Window_Closing">
+
+        Background="#BDBDBD" Loaded="Window_Loaded" Closing="Window_Closing" AllowsTransparency="True" WindowStyle="None" SizeChanged="mainWindow_SizeChanged">
     <Window.Resources>
         <Style TargetType="ScrollBar" BasedOn="{StaticResource VerticalScrollBar}"/>
         <Style TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
-
-    <Grid UseLayoutRounding="True" Background="#BDBDBD" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
-        <Image x:Name="image" Height="100" Source="pack://application:,,,/img/MainHeader.png" Stretch="Fill" Margin="0,15,0,0" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top">
-        </Image>
-        <Canvas x:Name="CanvasTitleBar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="15" Background="#424242" Grid.ColumnSpan="3" MouseDown="CanvasTitleBar_MouseDown">
-            <Ellipse x:Name="Close" Stroke="#E53935" Fill="{Binding btnCloseColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Height="11" Width="11" RenderTransformOrigin="3.842,0.673" Canvas.Left="591" MouseDown="Ellipse_MouseDown" Canvas.Top="2" MouseEnter="Ellipse_MouseEnter" MouseLeave="Ellipse_MouseLeave"/>
-            <Ellipse x:Name="Minimize" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" Height="11" Width="11" RenderTransformOrigin="3.842,0.673" Canvas.Left="578" Canvas.Top="2" MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave"/>
-        </Canvas>
-        <dragablz:TabablzControl x:Name="materialTabControl" FixedHeaderCount="2" Background="#BDBDBD" Height="320" Margin="0,115,0,0" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" VerticalAlignment="Top">
+    <Grid x:Name="MainGrid" Background="#424242" Height="Auto" Width="Auto" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.03*" MinHeight="15" MaxHeight="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#424242" x:Name="TitleBar" MouseDown="TitleBar_MouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.02*" />
+                <ColumnDefinition Width="0.02*" />
+            </Grid.ColumnDefinitions>
+            <Path x:Name="Minimize" Stretch="Uniform" Grid.Column="1" Margin="2.5,2.5,2.5,2.5" Grid.Row="0" HorizontalAlignment="Center" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave"> 
+                <Path.Data>
+                    <EllipseGeometry RadiusX="1" RadiusY="1"/>
+                </Path.Data>
+            </Path>
+            <Path x:Name="Close" Stretch="Uniform" Grid.Column="2" Margin="2.5,2.5,2.5,2.5" Grid.Row="0" HorizontalAlignment="Center" Stroke="#E53935" Fill="{Binding btnCloseColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Ellipse_MouseDown" MouseEnter="Ellipse_MouseEnter" MouseLeave="Ellipse_MouseLeave">
+                <Path.Data>
+                    <EllipseGeometry RadiusX="1" RadiusY="1"/>
+                </Path.Data>
+            </Path>
+        </Grid>
+        <dragablz:TabablzControl x:Name="materialTabControl" Height="Auto" Grid.Row="2" FixedHeaderCount="2" Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" VerticalAlignment="Top" MinWidth="605" MinHeight="435">
             <dragablz:TabablzControl.Resources>
                 <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#4E342E"/>
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
-                    <Setter Property="Height" Value="120" />
                     <Setter Property="BorderBrush" Value="#BDBDBD"/>
                     <Setter Property="InkCanvas.Background" Value="#4E342E"/>
                     <Setter Property="ItemContainerStyle">
@@ -47,22 +62,30 @@
                 </Style>
             </dragablz:TabablzControl.Resources>
             <TabItem x:Name="TabLauncher" Header="Launcher">
-                <Grid Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" Margin="-3,9,-3,-3">
-                    <StackPanel x:Name="StackPanel_LaunchButtons" HorizontalAlignment="Left" Width="147" VerticalAlignment="Top" Height="280" >
-                        <Button x:Name="MaterialButtonLauncher" Style="{StaticResource materialButton}" Click="MaterialButtonLauncher_Click" Height="50">
-                            <TextBlock>Launch<LineBreak/>Tools</TextBlock>
-                        </Button>
-                        <CheckBox x:Name="CheckBoxStartPoE"  Style="{StaticResource materialCheckBox}" IsChecked="True" Click="CheckBoxStartPoE_Click" Height="40" HorizontalAlignment="Right" Width="127">
-                            <TextBlock>Start PoE ?<LineBreak/>(Steam Only)</TextBlock>
-                        </CheckBox>
-                        <CheckBox x:Name="CheckBoxCloseOnExit"  Style="{StaticResource materialCheckBox}" IsChecked="True" Height="40" HorizontalAlignment="Right" Width="127" Click="CheckBoxCloseOnExit_Click">
-                            <TextBlock>Close tools when<LineBreak/>game exits ?</TextBlock>
-                        </CheckBox>
-                        <Button x:Name="AllWebsitesButtonLauncher" Style="{StaticResource materialButton}" Click="AllWebsitesButtonLauncher_Click" Height="50">
-                            <TextBlock>Launch all<LineBreak/>websites</TextBlock>
-                        </Button>
-                    </StackPanel>
-                    <WrapPanel x:Name="linkButtonsPanel" Orientation="Vertical" Margin="147,0,0,0" HorizontalAlignment="Left" >
+                <Grid Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.33*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.4*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="MaterialButtonLauncher" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Style="{StaticResource materialButton}" Click="MaterialButtonLauncher_Click" Height="50">
+                        <TextBlock>Launch<LineBreak/>Tools</TextBlock>
+                    </Button>
+                    <CheckBox x:Name="CheckBoxStartPoE" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Style="{StaticResource materialCheckBox}" IsChecked="True" Click="CheckBoxStartPoE_Click" Height="40" Width="127">
+                        <TextBlock>Start PoE ?<LineBreak/>(Steam Only)</TextBlock>
+                    </CheckBox>
+                    <CheckBox x:Name="CheckBoxCloseOnExit" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Style="{StaticResource materialCheckBox}" IsChecked="True" Height="40" Width="127" Click="CheckBoxCloseOnExit_Click">
+                        <TextBlock>Close tools when<LineBreak/>game exits ?</TextBlock>
+                    </CheckBox>
+                    <Button x:Name="AllWebsitesButtonLauncher" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Style="{StaticResource materialButton}" Click="AllWebsitesButtonLauncher_Click" Height="50">
+                        <TextBlock>Launch all<LineBreak/>websites</TextBlock>
+                    </Button>
+                    <WrapPanel x:Name="linkButtonsPanel" Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" >
                         <WrapPanel.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource materialButton}">
                                 <Setter Property="Margin" Value="0,20,20,0"/>
@@ -127,5 +150,6 @@
                 </Grid>
             </TabItem>
         </dragablz:TabablzControl>
+
     </Grid>
 </Window>
