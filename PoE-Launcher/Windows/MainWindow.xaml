@@ -24,7 +24,7 @@
     </Window.Resources>
     <Grid x:Name="MainGrid" Background="#424242" Height="Auto" Width="Auto" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.03*" MinHeight="15" MaxHeight="20"/>
+            <RowDefinition Height="0.03*" MinHeight="15" MaxHeight="17"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#424242" x:Name="TitleBar" MouseDown="TitleBar_MouseDown">
@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="0.02*" />
                 <ColumnDefinition Width="0.02*" />
             </Grid.ColumnDefinitions>
-            <Path x:Name="Minimize" Stretch="Uniform" Grid.Column="1" Margin="2.5,2.5,2.5,2.5" Grid.Row="0" HorizontalAlignment="Center" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave"> 
+            <Path x:Name="Minimize" Stretch="Uniform" Grid.Column="1" Margin="2.5,2.5,2.5,2.5" Grid.Row="0" HorizontalAlignment="Center" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave">
                 <Path.Data>
                     <EllipseGeometry RadiusX="1" RadiusY="1"/>
                 </Path.Data>
@@ -61,8 +61,8 @@
                     </Setter>
                 </Style>
             </dragablz:TabablzControl.Resources>
-            <TabItem x:Name="TabLauncher" Header="Launcher">
-                <Grid Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" >
+            <TabItem x:Name="TabLauncher" Header="Launcher" Width="Auto" Height="Auto">
+                <Grid Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled"  >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.33*"/>
                         <ColumnDefinition Width="*"/>
@@ -88,7 +88,7 @@
                     <WrapPanel x:Name="linkButtonsPanel" Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" >
                         <WrapPanel.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource materialButton}">
-                                <Setter Property="Margin" Value="0,20,20,0"/>
+                                <Setter Property="" Value="0,20,20,0"/>
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -100,9 +100,13 @@
                 </Grid>
             </TabItem >
 
-            <TabItem x:Name="TabConfiguration" Header="Configuration" >
+            <TabItem x:Name="TabConfiguration" Header="Configuration" Width="Auto" Height="Auto">
                 <Grid Background="#BDBDBD">
-                    <ScrollViewer x:Name="ScrollViewerRepo" HorizontalAlignment="Left" Width="435">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer x:Name="ScrollViewerRepo" Grid.Column="0" HorizontalAlignment="Left" Width="Auto">
                         <StackPanel x:Name="panelRepo" VerticalAlignment="Top" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
                             <StackPanel.Resources>
                                 <Style TargetType="{x:Type local:RepoDispControl}">
@@ -113,40 +117,42 @@
                             </StackPanel.Resources>
                         </StackPanel>
                     </ScrollViewer>
-                    <TextBox Style="{StaticResource placeHolderMaterialTextBox}" Tag="Search..." x:Name="filter_Search" Width="Auto" Margin="440,0,0,250" TextChanged="filter_Search_TextChanged"/>
-                    <ListBox Name="filter_listbox" Margin="440,30,0,60" Height="Auto" SelectionChanged="filter_listbox_SelectionChanged">
-                        <ListBoxItem x:Name="filter_All">
-                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_All, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                All
-                            </CheckBox>
-                        </ListBoxItem>
-                        <ListBoxItem x:Name="filter_Downloaded">
-                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Downloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                Downloaded
-                            </CheckBox>
-                        </ListBoxItem>
-                        <ListBoxItem x:Name="filter_NotDownloaded">
-                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_NotDownloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                Not downloaded
-                            </CheckBox>
-                        </ListBoxItem>
-                        <ListBoxItem x:Name="filter_Enabled">
-                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Enabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                Enabled
-                            </CheckBox>
-                        </ListBoxItem>
-                        <ListBoxItem x:Name="filter_Disabled">
-                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Disabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                Disabled
-                            </CheckBox>
-                        </ListBoxItem>
-                        <ListBoxItem x:Name="filter_Custom">
-                            <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Custom, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                Custom tools
-                            </CheckBox>
-                        </ListBoxItem>
-                    </ListBox>
-                    <Button x:Name="AddCustomTool" Content="Custom" Style="{StaticResource materialButton}" Margin="450,235,0,0" VerticalAlignment="Top" Click="AddCustomToolButton_Click"/>
+                    <StackPanel Grid.Column="1">
+                        <TextBox Style="{StaticResource placeHolderMaterialTextBox}" Tag="Search..." x:Name="filter_Search" Width="Auto" TextChanged="filter_Search_TextChanged"/>
+                        <ListBox Name="filter_listbox" Height="Auto" SelectionChanged="filter_listbox_SelectionChanged">
+                            <ListBoxItem x:Name="filter_All">
+                                <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_All, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                    All
+                                </CheckBox>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="filter_Downloaded">
+                                <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Downloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                    Downloaded
+                                </CheckBox>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="filter_NotDownloaded">
+                                <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_NotDownloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                    Not downloaded
+                                </CheckBox>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="filter_Enabled">
+                                <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Enabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                    Enabled
+                                </CheckBox>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="filter_Disabled">
+                                <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Disabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                    Disabled
+                                </CheckBox>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="filter_Custom">
+                                <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Custom, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
+                                    Custom tools
+                                </CheckBox>
+                            </ListBoxItem>
+                        </ListBox>
+                        <Button x:Name="AddCustomTool" Content="Custom" Style="{StaticResource materialButton}" VerticalAlignment="Top" Click="AddCustomToolButton_Click"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
         </dragablz:TabablzControl>
