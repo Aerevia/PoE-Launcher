@@ -24,27 +24,27 @@
     </Window.Resources>
     <Grid x:Name="MainGrid" Background="#424242" Height="Auto" Width="Auto" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.03*" MinHeight="15" MaxHeight="17"/>
+            <RowDefinition Height="0.03*" MinHeight="10" MaxHeight="15"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#424242" x:Name="TitleBar" MouseDown="TitleBar_MouseDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.02*" />
-                <ColumnDefinition Width="0.02*" />
+                <ColumnDefinition Width="0.015*" />
+                <ColumnDefinition Width="0.015*" />
             </Grid.ColumnDefinitions>
-            <Path x:Name="Minimize" Stretch="Uniform" Grid.Column="1" Margin="2.5,2.5,2.5,2.5" Grid.Row="0" HorizontalAlignment="Center" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave">
+            <Path x:Name="Minimize" Stretch="Uniform" Grid.Column="1" Margin="1,1,1,1" MaxWidth="10" Grid.Row="0" HorizontalAlignment="Center" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave">
                 <Path.Data>
                     <EllipseGeometry RadiusX="1" RadiusY="1"/>
                 </Path.Data>
             </Path>
-            <Path x:Name="Close" Stretch="Uniform" Grid.Column="2" Margin="2.5,2.5,2.5,2.5" Grid.Row="0" HorizontalAlignment="Center" Stroke="#E53935" Fill="{Binding btnCloseColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Ellipse_MouseDown" MouseEnter="Ellipse_MouseEnter" MouseLeave="Ellipse_MouseLeave">
+            <Path x:Name="Close" Stretch="Uniform" Grid.Column="2" Margin="1,1,1,1" MaxWidth="10" Grid.Row="0" HorizontalAlignment="Center" Stroke="#E53935" Fill="{Binding btnCloseColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" MouseDown="Ellipse_MouseDown" MouseEnter="Ellipse_MouseEnter" MouseLeave="Ellipse_MouseLeave">
                 <Path.Data>
                     <EllipseGeometry RadiusX="1" RadiusY="1"/>
                 </Path.Data>
             </Path>
         </Grid>
-        <dragablz:TabablzControl x:Name="materialTabControl" Height="Auto" Grid.Row="2" FixedHeaderCount="2" Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" VerticalAlignment="Top" MinWidth="605" MinHeight="435">
+        <dragablz:TabablzControl x:Name="materialTabControl" Height="422" Grid.Row="1" FixedHeaderCount="2" Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" VerticalAlignment="Top" MinWidth="605" MinHeight="435">
             <dragablz:TabablzControl.Resources>
                 <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#4E342E"/>
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
@@ -88,7 +88,7 @@
                     <WrapPanel x:Name="linkButtonsPanel" Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" >
                         <WrapPanel.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource materialButton}">
-                                <Setter Property="" Value="0,20,20,0"/>
+                                <Setter Property="Margin" Value="0,20,20,0"/>
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -103,11 +103,11 @@
             <TabItem x:Name="TabConfiguration" Header="Configuration" Width="Auto" Height="Auto">
                 <Grid Background="#BDBDBD">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.6*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <ScrollViewer x:Name="ScrollViewerRepo" Grid.Column="0" HorizontalAlignment="Left" Width="Auto">
-                        <StackPanel x:Name="panelRepo" VerticalAlignment="Top" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
+                    <ScrollViewer x:Name="ScrollViewerRepo" Grid.Column="0" Width="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <StackPanel x:Name="panelRepo" Width="Auto" ScrollViewer.CanContentScroll="False" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
                             <StackPanel.Resources>
                                 <Style TargetType="{x:Type local:RepoDispControl}">
                                     <Setter Property="Margin" Value="0,10,0,10"/>
@@ -151,7 +151,7 @@
                                 </CheckBox>
                             </ListBoxItem>
                         </ListBox>
-                        <Button x:Name="AddCustomTool" Content="Custom" Style="{StaticResource materialButton}" VerticalAlignment="Top" Click="AddCustomToolButton_Click"/>
+                        <Button  x:Name="AddCustomTool" Content="Custom" Style="{StaticResource materialButton}" VerticalAlignment="Top" Click="AddCustomToolButton_Click"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
