@@ -28,6 +28,7 @@ namespace PoELauncher
     {  
         public SolidColorBrush btnCloseColor { get; set; }
         public SolidColorBrush btnMinimizeColor { get; set; }
+        public SolidColorBrush btnMaximizeColor { get; set; }
 
         Dictionary<int, GithubRepository> repositories = new Dictionary<int, GithubRepository>();
 
@@ -37,7 +38,7 @@ namespace PoELauncher
 
         private int customToolsStartId;
         private bool githubError = false;
-
+        private bool restoreDragMove = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -61,8 +62,9 @@ namespace PoELauncher
                 mainWindow.Width = Settings.Default.MainWindow_Width;
                 mainWindow.Height = Settings.Default.MainWindow_Heigth;
 
-                btnCloseColor = new SolidColorBrush(Color.FromArgb(255, 231, 76, 60));
-                btnMinimizeColor = new SolidColorBrush(Color.FromArgb(255, 241, 196, 15));
+                btnCloseColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF44336"));
+                btnMinimizeColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFEB3B"));
+                btnMaximizeColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF91FF35"));
 
                 readXML("data/data.xml");
 
@@ -348,14 +350,58 @@ namespace PoELauncher
 
         #region Window
 
-        private void Ellipse_MouseEnter(object sender, MouseEventArgs e)
+
+        private void mainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Settings.Default.MainWindow_Heigth = mainWindow.Height;
+            Settings.Default.MainWindow_Width = mainWindow.Width;
+            Settings.Default.Save();
+        }
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //MessageBox.Show(e.Source.ToString());
+            if (e.ClickCount == 2)
+            {
+                SwitchMaximizeWindowState();
+            }
+            else if (e.Source.GetType() != Maximize.GetType() && e.ButtonState == MouseButtonState.Pressed)
+            {
+                restoreDragMove = WindowState == WindowState.Maximized;
+                DragMove();
+            }
+        }
+
+        private void TitleBar_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            restoreDragMove = false;
+        }
+
+        private void TitleBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(restoreDragMove)
+            {
+                restoreDragMove = false;
+          
+                Point point = PointToScreen(e.MouseDevice.GetPosition(this));
+
+                Left = point.X - (RestoreBounds.Width * 0.5);
+                Top = point.Y;
+
+                WindowState = WindowState.Normal;
+
+                DragMove();
+            }
+        }
+
+        private void Close_MouseEnter(object sender, MouseEventArgs e)
         {
             btnCloseColor.Color = (Color)ColorConverter.ConvertFromString("#FFE53935");
 
             Mouse.OverrideCursor = Cursors.Hand;
         }
 
-        private void Ellipse_MouseLeave(object sender, MouseEventArgs e)
+        private void Close_MouseLeave(object sender, MouseEventArgs e)
         {
             btnCloseColor.Color = (Color)ColorConverter.ConvertFromString("#FFF44336");
             Mouse.OverrideCursor = null;
@@ -378,14 +424,26 @@ namespace PoELauncher
             Mouse.OverrideCursor = null;
         }
 
-        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Maximize_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            SwitchMaximizeWindowState();
         }
 
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Maximize_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.DragMove();
+            btnMaximizeColor.Color = (Color)ColorConverter.ConvertFromString("#FF76FF03");
+            Mouse.OverrideCursor = Cursors.Hand;
+        }
+
+        private void Maximize_MouseLeave(object sender, MouseEventArgs e)
+        {
+            btnMaximizeColor.Color = (Color)ColorConverter.ConvertFromString("#FF91FF35");
+            Mouse.OverrideCursor = null;
+        }
+
+        private void Close_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -404,6 +462,18 @@ namespace PoELauncher
                     dispControls[settings.IndexOf(setting)].applicationEnabled = setting.Enabled;
                     dispControls[settings.IndexOf(setting)].applicationVersion = setting.CurrentVersion;
                 }
+            }
+        }
+
+        private void SwitchMaximizeWindowState()
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
             }
         }
 
@@ -648,13 +718,6 @@ namespace PoELauncher
                     control.Visibility = Visibility.Collapsed;
                 }
             }
-        }
-
-        private void mainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            Settings.Default.MainWindow_Heigth = mainWindow.Height;
-            Settings.Default.MainWindow_Width = mainWindow.Width;
-            Settings.Default.Save();
         }
     }
 }
