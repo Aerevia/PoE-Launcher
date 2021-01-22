@@ -3,6 +3,7 @@ using PoELauncher.Extensions;
 using PoELauncher.Properties;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Rar;
+using SharpCompress.Common;
 using SharpCompress.Readers;
 using System;
 using System.Collections.Generic;
@@ -160,17 +161,17 @@ namespace PoELauncher
 
                 RepoDispControl dispControl = new RepoDispControl()
                 {
-                    applicationId = id,
-                    applicationName = name,
-                    applicationVersion = currentVer,
-                    applicationDescription = desc,
-                    applicationEnabled = enabled,
-                    IsSwitchEnabled = downloaded
+                    ApplicationId = id,
+                    ApplicationName = name,
+                    ApplicationVersion = currentVer,
+                    ApplicationDescription = desc,
+                    ApplicationEnabled = enabled,
+                    IsDownloaded = downloaded
                 };
 
                 dispControl.ButtonClick += new EventClick(ButtonClick);
                 dispControl.SwitchChecked += new EventChecked(SwitchChecked);
-                dispControl.pourcentageDl = Convert.ToDouble(downloaded);
+                dispControl.DownloadPercent = Convert.ToDouble(downloaded);
                 dispControls.Add(id, dispControl);
                 panelRepo.Children.Add(dispControl);
                 id++;
@@ -213,16 +214,16 @@ namespace PoELauncher
 
                 RepoDispControl dispControl = new RepoDispControl()
                 {
-                    applicationId = id,
-                    applicationName = name,
-                    applicationDescription = desc,
-                    applicationEnabled = true,
+                    ApplicationId = id,
+                    ApplicationName = name,
+                    ApplicationDescription = desc,
+                    ApplicationEnabled = true,
                 };
 
                 dispControl.ButtonClick += new EventClick(ButtonClickCustom);
                 dispControl.SwitchChecked += new EventChecked(SwitchCheckedCustom);
-                dispControl.pourcentageDl = 1.0;
-                dispControl.IsSwitchEnabled = true;
+                dispControl.DownloadPercent = 1.0;
+                dispControl.IsDownloaded = true;
                 dispControls.Add(id, dispControl);
                 panelRepo.Children.Add(dispControl);
                 id++;
@@ -247,7 +248,7 @@ namespace PoELauncher
                 {
                     Dispatcher.Invoke(new Action(() =>
                     {
-                        dispControls[id].pourcentageDl = Convert.ToDouble(progressPercentage);
+                        dispControls[id].DownloadPercent = Convert.ToDouble(progressPercentage);
                     }));
                 };
 
@@ -259,11 +260,11 @@ namespace PoELauncher
                         Settings.Default.ToolSettings[id].Downloaded = true; // = new ToolSettings { Downloaded = true };
                         Settings.Default.ToolSettings[id].CurrentVersion = Settings.Default.ToolSettings[id].LatestVersion;
                         Settings.Default.Save();
-                        dispControls[id].applicationVersion = Settings.Default.ToolSettings[id].CurrentVersion;
+                        dispControls[id].ApplicationVersion = Settings.Default.ToolSettings[id].CurrentVersion;
                         Dispatcher.Invoke(new Action(() =>
                         {
-                            dispControls[id].IsSwitchEnabled = true;
-                            dispControls[id].forceCheckEnableSwitch(true);
+                            dispControls[id].IsDownloaded = true;
+                            dispControls[id].ForceCheckEnableSwitch(true);
                         }));
                     }
                     catch (Exception )
@@ -337,8 +338,8 @@ namespace PoELauncher
                     Settings.Default.Save();
                     Dispatcher.Invoke(new Action(() =>
                     {
-                        dispControls[id].IsSwitchEnabled = false;
-                        dispControls[id].forceCheckEnableSwitch(false);
+                        dispControls[id].IsDownloaded = false;
+                        dispControls[id].ForceCheckEnableSwitch(false);
                     }));
                 }
                 catch (Exception ex)
@@ -365,7 +366,7 @@ namespace PoELauncher
             {
                 SwitchMaximizeWindowState();
             }
-            else if (e.Source.GetType() != Maximize.GetType() && e.ButtonState == MouseButtonState.Pressed)
+            else if (e.Source.GetType() != MaximizeButton.GetType() && e.ButtonState == MouseButtonState.Pressed)
             {
                 restoreDragMove = WindowState == WindowState.Maximized;
                 DragMove();
@@ -458,9 +459,9 @@ namespace PoELauncher
             {
                 foreach (var setting in settings)
                 {
-                    dispControls[settings.IndexOf(setting)].IsSwitchEnabled = setting.Downloaded;
-                    dispControls[settings.IndexOf(setting)].applicationEnabled = setting.Enabled;
-                    dispControls[settings.IndexOf(setting)].applicationVersion = setting.CurrentVersion;
+                    dispControls[settings.IndexOf(setting)].IsDownloaded = setting.Downloaded;
+                    dispControls[settings.IndexOf(setting)].ApplicationEnabled = setting.Enabled;
+                    dispControls[settings.IndexOf(setting)].ApplicationVersion = setting.CurrentVersion;
                 }
             }
         }
@@ -551,7 +552,7 @@ namespace PoELauncher
                     var allFiles = Directory.GetFiles(repo.Value.App, "*.exe", SearchOption.AllDirectories);
                     foreach (string file in allFiles)
                     {
-                        if (file.Contains(repo.Value.Exe))
+                        if(Path.GetFileName(file).Contains(repo.Value.Exe))
                         {
                             Process.Start(file);
                         }
@@ -568,7 +569,7 @@ namespace PoELauncher
                 };
                 gameProcess.Start();
                 Process[] process = Process.GetProcessesByName(processName);
-                Timer timerProcess = new Timer(3000);
+                Timer timerProcess = new Timer(5000);
                 timerProcess.Elapsed += TimerProcess_Elapsed;
                 timerProcess.Start();
             }
@@ -577,7 +578,6 @@ namespace PoELauncher
         private void TimerProcess_Elapsed(object sender, ElapsedEventArgs e)
         {
             string processName = "PathOfExileSteam";
-            //string processName = "notepad";
             if (!(Process.GetProcessesByName(processName).Length > 0))
             {
                 foreach (var tool in repositories.Values)
@@ -637,7 +637,7 @@ namespace PoELauncher
                 case 1:
                     foreach (RepoDispControl control in dispControls.Values)
                     {
-                        if (!control.IsSwitchEnabled)
+                        if (!control.IsDownloaded)
                         {
                             control.Visibility = Visibility.Collapsed;
                         }
@@ -650,7 +650,7 @@ namespace PoELauncher
                 case 2:
                     foreach (RepoDispControl control in dispControls.Values)
                     {
-                        if (control.IsSwitchEnabled)
+                        if (control.IsDownloaded)
                         {
                             control.Visibility = Visibility.Collapsed;
                         }
@@ -663,7 +663,7 @@ namespace PoELauncher
                 case 3:
                     foreach (RepoDispControl control in dispControls.Values)
                     {
-                        if (!control.applicationEnabled)
+                        if (!control.ApplicationEnabled)
                         {
                             control.Visibility = Visibility.Collapsed;
                         }
@@ -676,7 +676,7 @@ namespace PoELauncher
                 case 4:
                     foreach (RepoDispControl control in dispControls.Values)
                     {
-                        if (control.applicationEnabled)
+                        if (control.ApplicationEnabled)
                         {
                             control.Visibility = Visibility.Collapsed;
                         }
@@ -689,7 +689,7 @@ namespace PoELauncher
                 case 5:
                     foreach (RepoDispControl control in dispControls.Values)
                     {
-                        if (control.applicationId < customToolsStartId)
+                        if (control.ApplicationId < customToolsStartId)
                         {
                             control.Visibility = Visibility.Collapsed;
                         }
@@ -709,7 +709,7 @@ namespace PoELauncher
             filter_listbox.SelectedIndex = 0;
             foreach (RepoDispControl control in dispControls.Values)
             {
-                if (control.applicationName.ToLower().Contains(filter_Search.Text.ToLower()))
+                if (control.ApplicationName.ToLower().Contains(filter_Search.Text.ToLower()))
                 {
                     control.Visibility = Visibility.Visible;
                 }

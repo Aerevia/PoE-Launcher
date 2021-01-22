@@ -150,6 +150,7 @@
     <Compile Include="Controls\RepoDispControl.xaml.cs">
       <DependentUpon>RepoDispControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\BooleanToVisibilityConverter.cs" />
     <Compile Include="Extensions\GithubRepository.cs" />
     <Compile Include="Extensions\HttpClientDownloadWithProgress.cs" />
     <Compile Include="Extensions\SettingsConverter.cs" />

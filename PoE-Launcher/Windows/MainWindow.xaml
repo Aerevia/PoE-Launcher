@@ -23,34 +23,55 @@
     </Window.Resources>
     <Grid x:Name="MainGrid" Background="#424242" Height="Auto" Width="Auto" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.03*" MinHeight="12" MaxHeight="17"/>
+            <RowDefinition Height="0.075*" MinHeight="12" MaxHeight="17"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#424242" x:Name="TitleBar" MouseDown="TitleBar_MouseDown" MouseMove="TitleBar_MouseMove" MouseUp="TitleBar_MouseUp" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.012*" MinWidth="12" />
-                <ColumnDefinition Width="0.012*" MinWidth="12" />
-                <ColumnDefinition Width="0.012*" MinWidth="12" />
+                <ColumnDefinition Width="0.012*" MinWidth="15" />
+                <ColumnDefinition Width="0.012*" MinWidth="15" />
+                <ColumnDefinition Width="0.012*" MinWidth="15" />
             </Grid.ColumnDefinitions>
-            <Path x:Name="Minimize" Stretch="Uniform" Grid.Column="1" Margin="1,1,1,1" MaxWidth="11" Grid.Row="0" HorizontalAlignment="Center" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" 
-                  MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave">
-                <Path.Data>
-                    <EllipseGeometry RadiusX="1" RadiusY="1"/>
-                </Path.Data>
-            </Path>
-            <Path x:Name="Maximize" Stretch="Uniform" Grid.Column="2" Margin="1,1,1,1" MaxWidth="11" Grid.Row="0" HorizontalAlignment="Center" Stroke="#91FF35" Fill="{Binding btnMaximizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" 
-                  MouseDown="Maximize_MouseDown" MouseEnter="Maximize_MouseEnter" MouseLeave="Maximize_MouseLeave">
-                <Path.Data>
-                    <EllipseGeometry RadiusX="1" RadiusY="1"/>
-                </Path.Data>
-            </Path>
-            <Path x:Name="Close" Stretch="Uniform" Grid.Column="3" Margin="1,1,1,1" MaxWidth="11" Grid.Row="0" HorizontalAlignment="Center" Stroke="#E53935" Fill="{Binding btnCloseColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" 
-                  MouseDown="Close_MouseDown" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave">
-                <Path.Data>
-                    <EllipseGeometry RadiusX="1" RadiusY="1"/>
-                </Path.Data>
-            </Path>
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Path x:Name="MinimizeButton" Stretch="Uniform" Margin="1,1,1,1" MaxWidth="11" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="#FDD835" Fill="{Binding btnMinimizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" 
+                      MouseDown="Minimize_MouseDown" MouseEnter="Minimize_MouseEnter" MouseLeave="Minimize_MouseLeave">
+                    <Path.Data>
+                        <EllipseGeometry RadiusX="1" RadiusY="1"/>
+                    </Path.Data>
+                </Path>
+                <Path x:Name="MinimizeIcon" Stretch="Uniform" Margin="1,1,1,1" MaxWidth="8" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Black" Fill="Black" StrokeThickness="1.5" IsHitTestVisible="False"
+                     Visibility="{Binding Path=IsMouseDirectlyOver, ElementName=MinimizeButton, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Path.Data>
+                        <LineGeometry StartPoint="1,1" EndPoint="2,1"/>
+                    </Path.Data>
+                </Path>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="0" >
+                <Path x:Name="MaximizeButton" Stretch="Uniform"  Margin="1,1,1,1" MaxWidth="11" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="#91FF35" Fill="{Binding btnMaximizeColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" 
+                      MouseDown="Maximize_MouseDown" MouseEnter="Maximize_MouseEnter" MouseLeave="Maximize_MouseLeave">
+                    <Path.Data>
+                        <EllipseGeometry RadiusX="1" RadiusY="1"/>
+                    </Path.Data>
+                </Path>
+                <Path x:Name="MaximizeIcon" Stretch="Uniform" Margin="1,1,1,1" MaxWidth="5" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Black" Fill="Transparent" StrokeThickness="1" IsHitTestVisible="False"
+                      Visibility="{Binding Path=IsMouseDirectlyOver, ElementName=MaximizeButton, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Path.Data>
+                        <RectangleGeometry Rect="0,0,1,1" />
+                    </Path.Data>
+                </Path>
+            </Grid>
+            <Grid Grid.Column="3" Grid.Row="0">
+                <Path x:Name="CloseButton" Stretch="Uniform"  Margin="1,1,1,1" MaxWidth="11" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="#E53935" Fill="{Binding btnCloseColor, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}" 
+                      MouseDown="Close_MouseDown" MouseEnter="Close_MouseEnter" MouseLeave="Close_MouseLeave">
+                    <Path.Data>
+                        <EllipseGeometry RadiusX="1" RadiusY="1"/>
+                    </Path.Data>
+                </Path>
+                <Path x:Name="CloseIcon" Stretch="Uniform" Margin="1,1,1,1" MaxWidth="5" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="Black" Fill="Black" StrokeThickness="1" IsHitTestVisible="False"
+                      Visibility="{Binding Path=IsMouseDirectlyOver, ElementName=CloseButton, Converter={StaticResource BooleanToVisibilityConverter}}" Data="M0,0L5,5M5,0L0,5">
+                </Path>
+            </Grid>
         </Grid>
         <dragablz:TabablzControl x:Name="materialTabControl" Grid.Row="1" FixedHeaderCount="2" Background="#BDBDBD" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <dragablz:TabablzControl.Resources>

@@ -1,7 +1,9 @@
 ﻿using PoELauncher.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,69 +27,128 @@ namespace PoELauncher
     public delegate void EventChecked(object sender, VarEventChecked e);
     #endregion
 
-    public partial class RepoDispControl : UserControl
+    public partial class RepoDispControl : UserControl, INotifyPropertyChanged
     {
         public RepoDispControl()
         {
             InitializeComponent();
-            enableSwitch.IsEnabled = false;
         }
 
-        #region properties
-        public string applicationName { get; set; }
-        public string applicationVersion { get; set; }
-        public string applicationDescription { get; set; }
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private bool ApplicationEnabled;
-        public bool applicationEnabled
+        // This method is called by the Set accessor of each property.  
+        // The CallerMemberName attribute that is applied to the optional propertyName  
+        // parameter causes the property name of the caller to be substituted as an argument.  
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region properties
+        private string _ApplicationName;
+        public string ApplicationName
         {
             get
             {
-                return ApplicationEnabled;
+                return _ApplicationName;
             }
             set
             {
-                ApplicationEnabled = value;
+                _ApplicationName = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _ApplicationVersion;
+        public string ApplicationVersion 
+        {
+            get
+            {
+                return _ApplicationVersion;
+            }
+            set
+            {
+                _ApplicationVersion = value;
+                NotifyPropertyChanged();
+            } 
+        }
+
+        private string _ApplicationDescription;
+
+        public string ApplicationDescription
+        {
+            get
+            {
+                return _ApplicationDescription;
+            }
+            set
+            {
+                _ApplicationDescription = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+
+        private bool _ApplicationEnabled;
+        public bool ApplicationEnabled
+        {
+            get
+            {
+                return _ApplicationEnabled;
+            }
+            set
+            {
+                _ApplicationEnabled = value;
                 enableSwitch.IsChecked = value;
+                NotifyPropertyChanged();
             }
         }
         
-        private bool IsUdpateAvailable;
-        public bool isUdpateAvailable
+        private bool _IsUdpateAvailable;
+        public bool IsUdpateAvailable
         {
             get
             {
-                return IsUdpateAvailable;
+                return _IsUdpateAvailable;
             }
             set
             {
-                IsUdpateAvailable = value;
+                _IsUdpateAvailable = value;
+                NotifyPropertyChanged();
             }
         }
-
-        public bool IsSwitchEnabled
+        private bool _IsDownloaded;
+        public bool IsDownloaded
         {
-            get { return enableSwitch.IsEnabled; }
+            get { return _IsDownloaded; }
             set
             {
-                enableSwitch.IsEnabled = value;
+                _IsDownloaded = value;
+                NotifyPropertyChanged();
             }
         }
 
-        public int applicationId { get; set; }
+        public int ApplicationId { get; set; }
 
-        public static DependencyProperty PourcentageDl = DependencyProperty.Register("pourcentageDl", typeof(double), typeof(UserControl));
-        public double pourcentageDl
+        //public static DependencyProperty _DownloadPercent = DependencyProperty.Register("DownloadPercent", typeof(double), typeof(UserControl));
+        private double _DownloadPercent;
+        public double DownloadPercent
         {
-            get { return (double)GetValue(PourcentageDl); }
-            set { SetValue(PourcentageDl, value); }
+            get { return _DownloadPercent; }
+            set 
+            {
+                _DownloadPercent = value;
+                NotifyPropertyChanged();
+            }
         }
 
         public event EventClick ButtonClick;
         public event EventChecked SwitchChecked;
         #endregion
 
-        public void forceCheckEnableSwitch(bool isChecked)
+        public void ForceCheckEnableSwitch(bool isChecked)
         {
             enableSwitch.IsChecked = isChecked;
         }
@@ -96,7 +157,7 @@ namespace PoELauncher
         {
             VarEventClick var = new VarEventClick();
             var.numButton = 1;
-            var.idApplication = applicationId;
+            var.idApplication = ApplicationId;
             if (ButtonClick != null)
             {
                 ButtonClick(this, var);
@@ -107,7 +168,7 @@ namespace PoELauncher
         {
             VarEventClick var = new VarEventClick();
             var.numButton = 2;
-            var.idApplication = applicationId;
+            var.idApplication = ApplicationId;
             if (ButtonClick != null)
             {
                 ButtonClick(this, var);
@@ -126,10 +187,10 @@ namespace PoELauncher
 
         private void enableSwitch_IsCheckedChanged(bool isChecked)
         {
-            applicationEnabled = enableSwitch.IsChecked.Value;
+            ApplicationEnabled = enableSwitch.IsChecked.Value;
             VarEventChecked var = new VarEventChecked();
-            var.idApplication = applicationId;
-            var.enabled = applicationEnabled;
+            var.idApplication = ApplicationId;
+            var.enabled = ApplicationEnabled;
             if (ButtonClick != null)
             {
                 SwitchChecked(this, var);
