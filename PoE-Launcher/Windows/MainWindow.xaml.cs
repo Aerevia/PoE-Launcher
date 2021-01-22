@@ -235,7 +235,7 @@ namespace PoELauncher
         /// </summary>
         /// <param name="id">Id of the tool to download</param>
         /// <returns></returns>
-        private async Task download(int id)
+        private async Task Download(int id)
         {
             string downloadLink = repositories[id].latestVersionLink, fileName;
             string extension = System.IO.Path.GetExtension(downloadLink);
@@ -256,7 +256,7 @@ namespace PoELauncher
                 {
                     try
                     {
-                        unzip(id, extension);
+                        Unzip(id, extension);
                         Settings.Default.ToolSettings[id].Downloaded = true; // = new ToolSettings { Downloaded = true };
                         Settings.Default.ToolSettings[id].CurrentVersion = Settings.Default.ToolSettings[id].LatestVersion;
                         Settings.Default.Save();
@@ -282,13 +282,13 @@ namespace PoELauncher
         /// </summary>
         /// <param name="id">Id of the downloaded app</param>
         /// <param name="extension">Extension of the downloaded app</param>
-        private void unzip(int id, string extension)
+        private void Unzip(int id, string extension)
         {
             string app = repositories[id].App;
             string filePath = System.AppDomain.CurrentDomain.BaseDirectory + app + extension;
             string extractPath = System.AppDomain.CurrentDomain.BaseDirectory + app+@"\";
 
-            uninstallApp(id);
+            UninstallApp(id);
             switch (extension)
             {
                 case ".rar":
@@ -326,7 +326,7 @@ namespace PoELauncher
         /// Delete an installed app
         /// </summary>
         /// <param name="id">Id of the app</param>
-        private void uninstallApp(int id)
+        private void UninstallApp(int id)
         {
             string app = repositories[id].App;
             if (Directory.Exists(app))
@@ -496,13 +496,13 @@ namespace PoELauncher
 
             workerDownload.DoWork += async delegate (object s, DoWorkEventArgs args)
             {
-                await download(id);
+                await Download(id);
                 args.Result = id;
             };
 
             if (e.numButton == 2)
             {
-                uninstallApp(id);
+                UninstallApp(id);
             }
             else
             {
@@ -525,7 +525,7 @@ namespace PoELauncher
             int id = e.idApplication;
             if (e.numButton == 2)
             {
-                uninstallApp(id);
+                UninstallApp(id);
                 //MessageBox.Show("delete");
             }
             e.numButton = 0;
@@ -549,12 +549,18 @@ namespace PoELauncher
             {
                 if (Settings.Default.ToolSettings[repo.Key].Enabled)
                 {
-                    var allFiles = Directory.GetFiles(repo.Value.App, "*.exe", SearchOption.AllDirectories);
+
+                    var allFiles = Directory.GetFiles(repo.Value.App, repo.Value.Exe + ".*", SearchOption.AllDirectories);
+
                     foreach (string file in allFiles)
                     {
                         if(Path.GetFileName(file).Contains(repo.Value.Exe))
                         {
                             Process.Start(file);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Executable for " + repo.Value.App + " not found");
                         }
                     }
                 }

@@ -6,7 +6,7 @@
       <app>POE-TradeMacro</app>
       <name>TradeMacro</name>
       <desc>PoE TradeMacro is an Autohotkey (AHK) script that provides several convenient QoL features for Path of Exile Trading.</desc>
-      <exe>Fallback</exe>
+      <exe>Run_TradeMacro</exe>
     </repo>
     <repo>
       <owner>lemasato</owner>
@@ -16,18 +16,25 @@
       <exe>POE Trades Companion</exe>
     </repo>
     <repo>
-        <owner>Exslims</owner>
-        <app>MercuryTrade</app>
-        <name>MercuryTrade</name>
-        <desc>An overlay application for Path of Exile(Tracking, Trading, Chat, etc) </desc>
-        <exe>MercuryTrade</exe>
-      </repo>
-      <repo>
+      <owner>Exslims</owner>
+      <app>MercuryTrade</app>
+      <name>MercuryTrade</name>
+      <desc>An overlay application for Path of Exile(Tracking, Trading, Chat, etc) </desc>
+      <exe>MercuryTrade</exe>
+    </repo>
+    <repo>
       <owner>yznpku</owner>
       <app>LabCompass</app>
       <name>LabCompass</name>
       <desc>Lab Compass for the lab.</desc>
       <exe>LabCompass</exe>
+    </repo>
+    <repo>
+      <owner>domialex</owner>
+      <app>Sidekick</app>
+      <name>Sidekick</name>
+      <desc>A Path of Exile helper that shows item prices using the official Path of Exile Trade API.</desc>
+      <exe>Sidekick</exe>
     </repo>
   </repos>
   <links>

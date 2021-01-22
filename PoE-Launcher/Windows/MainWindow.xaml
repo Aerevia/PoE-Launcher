@@ -156,35 +156,35 @@
                                 <RowDefinition Height="0.2*"/>
                             </Grid.RowDefinitions>
                             <TextBox Style="{StaticResource placeHolderMaterialTextBox}" Tag="Search..." x:Name="filter_Search" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="filter_Search_TextChanged"/>
-                            <ListBox Name="filter_listbox" Height="Auto" SelectionChanged="filter_listbox_SelectionChanged"  Grid.Row="1" >
-                                <ListBoxItem x:Name="filter_All">
-                                    <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_All, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                        All
+                            <ListBox Name="filter_listbox" Height="Auto" SelectionChanged="filter_listbox_SelectionChanged" Grid.Row="1" >
+                                <ListBoxItem x:Name="filter_All" VerticalContentAlignment="Center">
+                                    <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_All, Mode=TwoWay}" Style="{StaticResource materialCheckBox}" VerticalAlignment="Center" VerticalContentAlignment="Center">
+                                        <TextBlock Text="All" VerticalAlignment="Center"/>
                                     </CheckBox>
                                 </ListBoxItem>
                                 <ListBoxItem x:Name="filter_Downloaded" >
                                     <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Downloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                        Downloaded
+                                        <TextBlock Text="Downloaded" VerticalAlignment="Center"/>
                                     </CheckBox>
                                 </ListBoxItem>
                                 <ListBoxItem x:Name="filter_NotDownloaded">
                                     <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_NotDownloaded, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                        Not downloaded
+                                        <TextBlock Text="Not downloaded" VerticalAlignment="Center"/>
                                     </CheckBox>
                                 </ListBoxItem>
                                 <ListBoxItem x:Name="filter_Enabled">
                                     <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Enabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                        Enabled
+                                        <TextBlock Text="Enabled" VerticalAlignment="Center"/>
                                     </CheckBox>
                                 </ListBoxItem>
                                 <ListBoxItem x:Name="filter_Disabled" >
                                     <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Disabled, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                        Disabled
+                                        <TextBlock Text="Disabled" VerticalAlignment="Center"/>
                                     </CheckBox>
                                 </ListBoxItem>
                                 <ListBoxItem x:Name="filter_Custom" >
                                     <CheckBox IsChecked="{Binding IsSelected, ElementName=filter_Custom, Mode=TwoWay}" Style="{StaticResource materialCheckBox}">
-                                        Custom tools
+                                        <TextBlock Text="Custom tools" VerticalAlignment="Center"/>
                                     </CheckBox>
                                 </ListBoxItem>
                             </ListBox>
